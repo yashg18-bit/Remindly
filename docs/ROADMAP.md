@@ -2,12 +2,12 @@
 
 ## Phase 1
 
-- [✅] Repository
-- [✅] Folder Structure
-- [ ] README
-- [ ] Database Design
-- [ ] API Design
-- [ ] Architecture
+- [✅ ] Repository
+- [✅ ] Folder Structure
+- [✅ ] README
+- [✅ ] Database Design
+- [✅ ] API Design
+- [✅ ] Architecture
 
 ---
 
