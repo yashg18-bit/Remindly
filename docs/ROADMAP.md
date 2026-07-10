@@ -13,9 +13,9 @@
 
 ## Phase 2
 
-- [ ] Spring Boot Setup
-- [ ] MySQL
-- [ ] JWT
+- [✅  ] Spring Boot Setup
+- [✅  ] MySQL
+- [✅  ] JWT
 - [ ] CRUD
 
 ---
