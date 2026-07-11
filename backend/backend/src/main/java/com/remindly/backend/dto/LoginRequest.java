@@ -2,21 +2,13 @@ package com.remindly.backend.dto;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Size;
 
-public class RegisterRequest {
-@NotBlank
-    private String name;
-@Email
+public class LoginRequest {
+    @NotBlank
+    @Email
     private String email;
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
+    @NotBlank
+    private String password;
 
     public String getEmail() {
         return email;
@@ -33,6 +25,4 @@ public class RegisterRequest {
     public void setPassword(String password) {
         this.password = password;
     }
-@Size(min = 8)
-    private String password;
 }
