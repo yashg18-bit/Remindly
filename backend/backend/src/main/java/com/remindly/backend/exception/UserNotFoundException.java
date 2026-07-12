@@ -1,6 +1,4 @@
-package com.remindly.backend.security;
-
-public class JwtFilter package com.remindly.backend.exception;
+package com.remindly.backend.exception;
 
 public class UserNotFoundException extends RuntimeException {
 
@@ -8,5 +6,4 @@ public class UserNotFoundException extends RuntimeException {
         super(message);
     }
 
-}{
 }

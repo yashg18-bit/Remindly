@@ -3,6 +3,9 @@ package com.remindly.backend.service;
 import com.remindly.backend.dto.LoginRequest;
 import com.remindly.backend.dto.LoginResponse;
 import com.remindly.backend.dto.RegisterRequest;
+import com.remindly.backend.exception.EmailAlreadyExistsException;
+import com.remindly.backend.exception.UserNotFoundException;
+import com.remindly.backend.exception.dInvalidCredentialsException;
 import com.remindly.backend.repository.UserRepository;
 import com.remindly.backend.security.JwtService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -25,7 +28,7 @@ private  final BCryptPasswordEncoder passwordEncoder;
         Optional<User> existingUser =
                 userRepository.findByEmail(request.getEmail());
         if (existingUser.isPresent()) {
-            throw new RuntimeException("Email already exists");
+            throw new EmailAlreadyExistsException("Email already exists");
         }
         User user = new User();
 
@@ -43,14 +46,14 @@ private  final BCryptPasswordEncoder passwordEncoder;
         Optional<User> user = userRepository.findByEmail(request.getEmail());
 
         if (user.isEmpty()) {
-            throw new RuntimeException("User not found");
+            throw new UserNotFoundException("User  not found");
         }
 
         if (!passwordEncoder.matches(
                 request.getPassword(),
                 user.get().getPassword())) {
 
-            throw new RuntimeException("Invalid Password");
+            throw new dInvalidCredentialsException("Invalid Password");
         }
 
         String token = jwtService.generateToken(user.get());
