@@ -1,8 +1,10 @@
 package com.remindly.backend.service;
 
 import com.remindly.backend.dto.LoginRequest;
+import com.remindly.backend.dto.LoginResponse;
 import com.remindly.backend.dto.RegisterRequest;
 import com.remindly.backend.repository.UserRepository;
+import com.remindly.backend.security.JwtService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import com.remindly.backend.entity.User;
@@ -14,9 +16,10 @@ import java.util.Optional;
 public class UserService {
 private  final BCryptPasswordEncoder passwordEncoder;
     private  final UserRepository userRepository;
-    public UserService(UserRepository userRepository, BCryptPasswordEncoder passwordEncoder){
+    public UserService(UserRepository userRepository, BCryptPasswordEncoder passwordEncoder,JwtService jwtService){
         this.userRepository=userRepository;
         this.passwordEncoder=passwordEncoder;
+        this.jwtService = jwtService;
     }
     public void register(RegisterRequest request) {
         Optional<User> existingUser =
@@ -35,17 +38,22 @@ private  final BCryptPasswordEncoder passwordEncoder;
         userRepository.save(user);
 
     }
-    public void login(LoginRequest request) {
+    public LoginResponse login(LoginRequest request) {
+
         Optional<User> user = userRepository.findByEmail(request.getEmail());
+
         if (user.isEmpty()) {
             throw new RuntimeException("User not found");
         }
+
         if (!passwordEncoder.matches(
                 request.getPassword(),
                 user.get().getPassword())) {
 
             throw new RuntimeException("Invalid Password");
         }
-    }
 
+        String token = jwtService.generateToken(user.get());
+        return new LoginResponse(token);
+    }
 }

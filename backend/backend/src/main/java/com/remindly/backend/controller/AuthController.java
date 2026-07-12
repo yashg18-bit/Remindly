@@ -1,6 +1,8 @@
 package com.remindly.backend.controller;
 
 import com.remindly.backend.dto.LoginRequest;
+import com.remindly.backend.dto.LoginResponse;
+import com.remindly.backend.dto.MessageResponse;
 import com.remindly.backend.dto.RegisterRequest;
 import com.remindly.backend.service.UserService;
 import jakarta.validation.Valid;
@@ -22,19 +24,15 @@ public class AuthController {
 
 
     @PostMapping("/register")
-    public String register(@Valid @RequestBody RegisterRequest request) {
+    public MessageResponse register(@Valid @RequestBody RegisterRequest request) {
 
         userService.register(request);
 
-        return "User Registered Successfully";
+        return new MessageResponse("User Registered Successfully");
     }
 
     @PostMapping("/login")
-    public String login(@Valid @RequestBody LoginRequest request) {
-
-        userService.login(request);
-
-        return "Login Successful";
+    public LoginResponse login(@Valid @RequestBody LoginRequest request) {
+        return userService.login(request);
     }
-
 }
