@@ -9,6 +9,7 @@ import com.remindly.backend.exception.dInvalidCredentialsException;
 import com.remindly.backend.repository.UserRepository;
 import com.remindly.backend.security.JwtService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import com.remindly.backend.entity.User;
 
@@ -17,9 +18,10 @@ import java.util.Optional;
 
 @Service
 public class UserService {
-private  final BCryptPasswordEncoder passwordEncoder;
+private  final PasswordEncoder passwordEncoder;
     private  final UserRepository userRepository;
-    public UserService(UserRepository userRepository, BCryptPasswordEncoder passwordEncoder,JwtService jwtService){
+    private final JwtService jwtService;
+    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder,JwtService jwtService){
         this.userRepository=userRepository;
         this.passwordEncoder=passwordEncoder;
         this.jwtService = jwtService;

@@ -8,7 +8,8 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
-
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.context.SecurityContextHolder;
 import java.io.IOException;
 import java.util.Optional;
 
@@ -46,7 +47,16 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
         if (user.isPresent() && jwtService.isTokenValid(jwt, user.get())) {
 
-            // Next step
+            UsernamePasswordAuthenticationToken authToken =
+                    new UsernamePasswordAuthenticationToken(
+                            user.get(),
+                            null,
+                            user.get().getAuthorities()
+                    );
+
+            SecurityContextHolder
+                    .getContext()
+                    .setAuthentication(authToken);
 
         }
 
