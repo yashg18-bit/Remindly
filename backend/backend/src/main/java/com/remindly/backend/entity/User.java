@@ -2,8 +2,10 @@ package com.remindly.backend.entity;
 import jakarta.persistence.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-
+import java.util.ArrayList;
+import java.util.List;
 import java.time.LocalDateTime;
+
 import java.util.Collection;
 import java.util.Collections;
 
@@ -23,6 +25,19 @@ public class User implements UserDetails {
    private LocalDateTime createdAt;
     @Column(nullable = false)
     private LocalDateTime updatedAt;
+    @OneToMany(
+            mappedBy = "user",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true
+    )
+    private List<Reminder> reminders = new ArrayList<>();
+    public List<Reminder> getReminders() {
+        return reminders;
+    }
+
+    public void setReminders(List<Reminder> reminders) {
+        this.reminders = reminders;
+    }
 
     public Long getId() {
         return id;
