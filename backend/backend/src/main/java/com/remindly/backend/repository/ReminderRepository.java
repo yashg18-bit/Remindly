@@ -1,4 +1,9 @@
 package com.remindly.backend.repository;
 
-public class ReminderRepository {
+import com.remindly.backend.entity.Reminder;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface ReminderRepository
+        extends JpaRepository<Reminder, Long> {
+
 }
